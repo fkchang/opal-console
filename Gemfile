@@ -17,6 +17,7 @@ gem 'rb-fsevent'
 
 
 group :development do
+  gem 'terminal-notifier'
   gem 'terminal-notifier-guard'
 end
 
