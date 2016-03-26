@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Opal Console</title>
+    <meta charset='utf-8' />
+    <meta name="description" content="An Opal interactive console (REPL) as a webpage." />
+    <style>
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      pre {
+        margin: 0;
+        padding: 0;
+        font: inherit;
+      }
+
+      body {
+        background-color: #9b111e;
+        color: #fff;
+        font-size: 14px;
+        font-family: DejaVu Sans Mono, monospace;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        /* position:relative; */
+        font: inherit;
+      }
+
+      #output {
+        word-wrap: break-word;
+      }
+
+      #inputdiv {
+        width: 100%;
+      }
+
+      #inputl {
+        display: inline;
+        float: left;
+      }
+
+      #inputr {
+        display: inline;
+        float: left;
+      }
+
+      #input {
+        border: none;
+        outline: none;
+        background-color: #9b111e;
+        color: #fff;
+        font: inherit;
+        margin: 0;
+        padding: 0;
+        resize: none;
+        position: absolute;
+        overflow: hidden;
+      }
+
+      #inputcopy {
+        display: none;
+        white-space: pre-wrap;
+        min-height: 2em;
+        padding: 0;
+        margin: 0;
+        word-wrap: break-word;
+      }
+
+      .s_special { color: #4ff }
+
+      .s_number { color: #ff4 }
+
+      .s_boolean { color: #ff4 }
+
+      .s_undefined { color: #999 }
+
+      .s_null { font-weight: bold }
+
+      .s_string { color: #4f4 }
+
+      .s_date { color: #f4f }
+
+      .s_regexp { color: #f44 }
+
+
+      html, body {
+        background-color: #333;
+        color: white;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+      #console {
+        height: 1000px;
+        width: 100%;
+        /* position:relative;*/
+        background-color: black;
+        border: 2px solid #CCC;
+        margin: 0 auto;
+        /* margin-top: 50px;*/
+      }
+      .jqconsole {
+        padding: 10px;
+        padding-bottom: 10px;
+      }
+      .jqconsole-cursor {
+        background-color: #999;
+      }
+      .jqconsole-blurred .jqconsole-cursor {
+        background-color: #666;
+      }
+      .jqconsole-prompt {
+        color: #0d0;
+      }
+      .jqconsole-old-prompt {
+        color: #0b0;
+        font-weight: normal;
+      }
+      .jqconsole-input {
+        color: #dd0;
+      }
+      .jqconsole-old-input {
+        color: #bb0;
+        font-weight: normal;
+      }
+      .brace {
+        color: #00FFFF;
+      }
+      .paran {
+        color: #FF00FF;
+      }
+      .bracket {
+        color: #FFFF00;
+      }
+      .jqconsole-composition {
+        background-color: red;
+      }
+
+
+    </style>
+   <link rel="stylesheet" href="vendor/assets/stylesheets/codemirror.css"/>
+   <link rel="stylesheet" href="vendor/assets/stylesheets/jquery-ui.css" />
+  </head>
+  <body>
+    <div id="console">
+    </div>
+    <script type="text/javascript" src="assets/javascripts/top.js"> </script>
+
+
+    <script type="text/javascript" src="vendor/assets/javascripts/codemirror/codemirror.js"></script>
+    <script type="text/javascript" src="vendor/assets/javascripts/codemirror/emacs.js"></script>
+    <script type="text/javascript" src="vendor/assets/javascripts/codemirror/ruby.js"></script>
+    <script type="text/javascript" src="vendor/assets/javascripts/jquery.min.js" ></script>
+    <script type="text/javascript" src="vendor/assets/javascripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/javascripts/nodeutil.js"></script>
+    <script type="text/javascript" src="assets/javascripts/jqconsole.js"></script>
+    <script type="text/javascript" src="assets/javascripts/app-jqconsole-chrome.js"></script>
+
+  </body>
+</html>
