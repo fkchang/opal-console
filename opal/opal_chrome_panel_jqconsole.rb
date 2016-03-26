@@ -1,15 +1,10 @@
 require 'opal_irb_jqconsole'
-def help
-  OpalIrbJqconsole.help
-  nil
-end
-
-def history
-  OpalIrbJqconsole.history
-  nil
-end
 
 class OpalChromePanelJqconsole < OpalIrbJqconsole
+  def self.console
+    @console
+  end
+
   # create on a pre existing div
   def self.create(parent_element_id)
     @console = OpalChromePanelJqconsole.new(parent_element_id)
@@ -67,6 +62,9 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
     @jqconsole.Write(" => #{result_str} \n")
   end
 
+  # we override this because processing has to be asynchronous and connect to the inspectedWindow
+  # we wrap that interface via a TOP JS variable
+  # We've injected a ChromeEval class into inspectedWindow
   def process(cmd)
     begin
       log "\n\n|#{cmd}|"
@@ -74,7 +72,6 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
         cmd = cmd.sub /return(.+)/, "return#{$1}.$to_json()"
         $irb_last_compiled = @irb.parse cmd
         log $irb_last_compiled
-        top = Native(`TOP`)
         top.runIt("tmpVar_Irb = #{$irb_last_compiled}; Opal.ChromeEval.$eval(tmpVar_Irb)", lambda { |result, exception| eval_handler(result, exception)})
         # top.runIt("Opal.ChromeEval.$eval(#{$irb_last_compiled})", lambda { |result, exception| eval_handler(result, exception)})
         # top.runIt($irb_last_compiled, lambda { |result, exception| eval_handler(result, exception)})
@@ -97,6 +94,37 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
         return output
       end
     end
+  end
+
+  # overriding this to do some intialization
+  # TBD: extend parent class to have a dedicated init function we can properly overriding
+  # I can't think of any meaningful way to support a code link handling URL yet, so commandeering this
+  def setup_code_link_handling
+    top.runIt("Opal.ChromeEval.$eval(Opal.get('Opal').$$scope.get('VERSION'))",
+              lambda { |result, exception|
+                msg = result ? "Inspected Window Opal::VERSION = #{result}\n" : "Opal not running or older than 0.7 - Console not supported for this page\n"
+                write  msg
+              })
+    
+  end
+
+  def top
+    top = Native(`TOP`)
+  end
+
+  def tab_complete(text)
+    # alert "completing #{text.inspect}"
+    top.runIt("Opal.ChromeEval.$complete(#{text.inspect})",
+              lambda { |results, exception|
+                # alert("tab complete results = #{results.inspect}")
+                index, matches = results
+                results = OpalIrb::CompletionResults.new(text, index, matches)
+                results.set_old_prompt(@jqconsole, CONSOLE_PROMPT, 'jqconsole-old-prompt')
+                results.display_matches(@jqconsole)
+                results.update_prompt(@jqconsole)
+                results.insert_tab?
+              })
+    false
   end
 
 end
