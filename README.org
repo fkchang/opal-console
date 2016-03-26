@@ -1,0 +1,17 @@
+* Opal Console
+Opal console are develoment tools for Opal based web apps. It starts
+off with an "opal console" which is a subclass of [[https://github.com/fkchang/opal-irb][opal-irb]] modified to
+work as a Chrome devtool.
+
+Other features from [[https://www.youtube.com/watch?v=TRkhihHVLzQ][opal-inspector]] will be be added over time.
+
+** Console Features
+See [[http://fkchang.github.io/opal-irb/doc/presentations/opal_irb_overview.html][this article]] for a fairly comprehensive list of features.  Note
+that "live gists" are not supported, unless I figure out a way to make
+them work meaningful with a devtool.
+
+* FAQ
+
+** What Opal versions supported
+Due to having to inject some code into the inspected window, only Opal 0.8 and above are currently supported
+
