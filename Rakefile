@@ -35,6 +35,8 @@ task :clean do
 end
 
 
-task :build => [:build_jqconsole_chrome, :build_injection_script]
+task :build => [:build_jqconsole_chrome, :build_injection_script] do
+  sh 'say done building'
+end
 
 task default: :build
