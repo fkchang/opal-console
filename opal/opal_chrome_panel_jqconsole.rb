@@ -16,7 +16,8 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
   COMMANDS = ['help', 'history', '$_']
 
   def local_command?(cmd)
-    COMMANDS.include?(cmd)   
+    cmd =~ /^lputs/ ||
+      COMMANDS.include?(cmd)   
   end
 
   def process_local_cmd(cmd)
@@ -25,6 +26,9 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
       OpalChromePanelJqconsole.help
     when 'history'
       OpalChromePanelJqconsole.history
+    when /lputs (.+)/
+      OpalChromePanelJqconsole.unescaped_write(eval($1))
+
     end
   end
 
@@ -47,6 +51,7 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
   # Chrome panel handles eval as asynchronous
   def eval_handler(raw_result, raw_exception)
     result = Native(raw_result)
+    `console.orig_log(#{raw_exception})` if raw_exception
     exception = Native(raw_exception)
     if exception && (exception.isError || exception.isException)
       log exception

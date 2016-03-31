@@ -4,6 +4,7 @@ require 'opal-browser'
 require 'opal-rspec'
 require 'opal-irb'
 require 'opal/sprockets/environment'
+require 'awesome_print_lite'
 
 def build_static(app_basename, dest=".")
   # File.open("compiled/#{app_basename}.js", "w+") do |out|

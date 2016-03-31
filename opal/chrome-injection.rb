@@ -1,4 +1,27 @@
+# Opal code injected to respond to opal-console
 require 'opal_irb/completion_engine'
+require 'awesome_print_lite'
+
+class OpalConsole
+  def self.config
+    @@config ||= new
+  end
+
+  def initialize
+    self.auto_pretty_print = true
+  end
+  
+  def auto_pretty_print?
+    @auto_pretty_print
+  end
+  
+  def auto_pretty_print=(bool)
+    @auto_pretty_print = bool
+  end
+end
+
+AwesomePrintLite.force_colors = true
+
 class ChromeEval
   def self.eval(str)
     `toBeEvaled = #{str}`
@@ -8,7 +31,14 @@ class ChromeEval
     value = `eval(#{str})`
     `evaledValue = #{value}`
     $_  = value
-    Native($_).inspect
+    
+    ai = AwesomePrintLite::Inspector.new()
+    if OpalConsole.config.auto_pretty_print?
+      ai.awesome($_)
+    else
+      Native($_).inspect
+    end
+    
   end
 
   def self.complete(text)
