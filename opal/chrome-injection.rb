@@ -3,21 +3,30 @@ require 'opal_irb/completion_engine'
 require 'awesome_print_lite'
 
 class OpalConsole
-  def self.config
-    @@config ||= new
+  class Config
+    def initialize
+      self.auto_pretty_print = true
+    end
+    
+    def auto_pretty_print?
+      @auto_pretty_print
+    end
+    
+    def auto_pretty_print=(bool)
+      @auto_pretty_print = bool
+    end
+
   end
 
-  def initialize
-    self.auto_pretty_print = true
+  def self.config
+    # sometimes this gets cached as the wrong type - how?
+    if ! @@config.is_a? Config
+      @@config = Config.new
+    else
+      @@config
+    end
   end
-  
-  def auto_pretty_print?
-    @auto_pretty_print
-  end
-  
-  def auto_pretty_print=(bool)
-    @auto_pretty_print = bool
-  end
+
 end
 
 AwesomePrintLite.force_colors = true
@@ -32,9 +41,16 @@ class ChromeEval
     `evaledValue = #{value}`
     $_  = value
     
-    ai = AwesomePrintLite::Inspector.new()
+    ai = AwesomePrintLite::Inspector.new(raw: true)
+    # ai = AwesomePrintLite::Inspector.new#(raw: true)
     if OpalConsole.config.auto_pretty_print?
-      ai.awesome($_)
+      if(Native.native?($_))
+        # alert('It is native')
+        Native($_).inspect
+      else
+        # alert('It is NOT native')
+        ai.awesome(Native($_))
+      end
     else
       Native($_).inspect
     end
