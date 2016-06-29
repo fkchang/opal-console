@@ -17,7 +17,7 @@ var injectChromeEval = function() {
     // chrome.devtools.inspectedWindow.getResources(function(stuff) {console.log(stuff);});
 }
 
-
+// connect to backgroundPage
 backgroundPageConnection.postMessage({
     name: 'init',
     tabId: chrome.devtools.inspectedWindow.tabId
