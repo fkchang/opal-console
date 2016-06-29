@@ -5,22 +5,13 @@ var port = chrome.runtime.connect({
     name: 'content-script',
 });
 
-console.log('posting msg');
-window.postMessage( {
-    source: "opal-console-content-script",
-    eventType: "inject-opal-console-hooks"
-}, 
-                    "*"
-                  );
-
-var msg2 = {
+var injectOpalConsoleEvalMsg = {
     source: "opal-console-content-script",
     eventType: "inject-opal-console-hooks"
 };
-console.log('sending message');
-chrome.runtime.sendMessage( msg2 );
 
-console.log('adding listeners');
+chrome.runtime.sendMessage( injectOpalConsoleEvalMsg );
+
 window.addEventListener('message', function(event) {
     console.log('content listener');
     console.log(event);
