@@ -34,7 +34,7 @@ AwesomePrintLite.force_colors = true
 class ChromeEval
   def self.eval(str)
     `toBeEvaled = #{str}`
-    if str.is_a? String
+    if Native(str).is_a? String
       str = "'#{str}'"
     end
     value = `eval(#{str})`
@@ -45,11 +45,22 @@ class ChromeEval
     # ai = AwesomePrintLite::Inspector.new#(raw: true)
     if OpalConsole.config.auto_pretty_print?
       if(Native.native?($_))
-        # alert('It is native')
+        `console.log("Is Native")`
+        `console.log(#{$_})`
         Native($_).inspect
       else
-        # alert('It is NOT native')
-        ai.awesome(Native($_))
+        `console.log("NOT Native")`
+        `console.log(#{$_})`
+        # wrapped_obj = $_.is_a? Module ? $_ : Native($_)
+        wrapped_obj = Native($_)
+        if(wrapped_obj.is_a?(Native::Object))
+          wrapped_obj.inspect
+        else
+          if wrapped_obj.is_a?(Module)
+            wrapped_obj = $_
+          end
+          ai.awesome($_)
+        end
       end
     else
       Native($_).inspect
@@ -74,46 +85,46 @@ class ChromeEval
          }
        };
        return irbVars;|
-    end
+      end
 
-    def irb_varnames
-      irb_vars.map { |varname, value| varname }
-    end
+      def irb_varnames
+        irb_vars.map { |varname, value| varname }
+      end
 
-    def irb_gvars
-      %x|gvars = [];
+      def irb_gvars
+        %x|gvars = [];
        for(variable in Opal.gvars) {
          if(Opal.gvars.hasOwnProperty(variable)) {
             gvars.push([variable, Opal.gvars[variable]])
          }
        };
        return gvars;|
-    end
+      end
 
-    def irb_gvarnames
-      irb_gvars.map { |varname, value| varname }
-    end
+      def irb_gvarnames
+        irb_gvars.map { |varname, value| varname }
+      end
 
-    def opal_classes
-      classes = []
-      $opal_js_object = Native(`Opal`)    # have to make this global right now coz not seen in the each closure w/current opal
-      $opal_js_object.each {|k|
-        attr = $opal_js_object[k]
-        classes << attr if attr.is_a?(Class)
-      }
-      classes.uniq.sort_by { |cls| cls.name } # coz some Opal classes are the same, i.e. module == class, base, Kernel = Object
-    end
+      def opal_classes
+        classes = []
+        $opal_js_object = Native(`Opal`)    # have to make this global right now coz not seen in the each closure w/current opal
+        $opal_js_object.each {|k|
+          attr = $opal_js_object[k]
+          classes << attr if attr.is_a?(Class)
+        }
+        classes.uniq.sort_by { |cls| cls.name } # coz some Opal classes are the same, i.e. module == class, base, Kernel = Object
+      end
 
-    def opal_constants
-      constants = []
-      $opal_js_object = Native(`Opal`)    # have to make this global right now coz not seen in the each closure w/current opal
-      $opal_js_object.each {|k|
-        attr = $opal_js_object[k]
-        constants << attr
-      }
-      constants.uniq
+      def opal_constants
+        constants = []
+        $opal_js_object = Native(`Opal`)    # have to make this global right now coz not seen in the each closure w/current opal
+        $opal_js_object.each {|k|
+          attr = $opal_js_object[k]
+          constants << attr
+        }
+        constants.uniq
 
-    end
+      end
     
+    end
   end
-end

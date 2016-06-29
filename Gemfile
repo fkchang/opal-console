@@ -9,6 +9,7 @@ gem 'opal-jquery', '~> 0.4.0'
 gem 'opal-browser'
 gem 'opal-rspec'
 gem 'opal-irb'
+gem 'awesome_print_lite', path: '/Users/fkchang/src/awesome_print_lite'
 
 gem 'guard'
 gem 'guard-process'

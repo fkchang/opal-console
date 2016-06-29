@@ -1,3 +1,8 @@
+PATH
+  remote: /Users/fkchang/src/awesome_print_lite
+  specs:
+    awesome_print_lite (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -70,6 +75,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print_lite!
   guard
   guard-process
   opal (~> 0.8.0)

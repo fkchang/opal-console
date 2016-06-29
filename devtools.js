@@ -8,15 +8,18 @@ chrome.devtools.panels.create(
 );
 // we need to inject something that returns useful inspects because serialization
 // between inspectedWindow and devtools is limited
+
 var injectChromeEval = function() {
     // load injected script
+
     var xhr = new XMLHttpRequest();
     xhr.open('GET', chrome.extension.getURL('/chrome-injection.js'), false);
     xhr.send();
-
     var script = xhr.responseText;
-
     // inject into inspectedWindow
     chrome.devtools.inspectedWindow.eval(script);
+    // chrome.devtools.inspectedWindow.getResources(function(stuff) {console.log(stuff);});
 }
 injectChromeEval();
+
+

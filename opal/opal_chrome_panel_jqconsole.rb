@@ -107,6 +107,7 @@ class OpalChromePanelJqconsole < OpalIrbJqconsole
   def setup_code_link_handling
     top.runIt("Opal.ChromeEval.$eval(Opal.RUBY_ENGINE_VERSION)",
               lambda { |result, exception|
+                `console.orig_log(exception)` if exception
                 msg = result ? "Inspected Window Opal::VERSION = #{result}\n" : "Opal not running or older than 0.7 - Console not supported for this page\n"
                 write  msg
               })
