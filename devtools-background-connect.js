@@ -32,10 +32,12 @@ window.postMessage( {
 
 backgroundPageConnection.onMessage.addListener(function(msg) {
     if(msg.eventType == "inject-opal-console-hooks") {
+        // run this everytime the page is refreshed
         injectChromeEval();
-        alert('inject that mother');
+        // alert('inject that mother');
     }
-    alert('backgroundPageConnection msg = ' + JSON.stringify(msg));
+    // alert('backgroundPageConnection msg = ' + JSON.stringify(msg));
 });
 
-
+// run it the 1st time it's loaded
+injectChromeEval();

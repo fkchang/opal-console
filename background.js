@@ -3,17 +3,6 @@ var connections = {};
 
 // Receive message from content script and relay to the devTools page for the
 // current tab
-var injectChromeEval = function() {
-    // load injected script
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', chrome.extension.getURL('/chrome-injection.js'), false);
-    xhr.send();
-    var script = xhr.responseText;
-    // inject into inspectedWindow
-    chrome.devtools.inspectedWindow.eval(script);
-    // chrome.devtools.inspectedWindow.getResources(function(stuff) {console.log(stuff);});
-}
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('incoming message from injected script');
@@ -22,7 +11,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // Messages from content scripts should have sender.tab set
     if(request.eventType == "inject-opal-console-hooks") {
         // var result = chrome.tabs.executeScript(sender.tab.id, {file: 'chrome-injection.js'})
-        // injectChromeEval();
         chrome.runtime.sendMessage({name: 'trying to initialize'});
         window.postMessage( {name: 'window shit'}, "*");
         console.log('injecting opal console hooks');
