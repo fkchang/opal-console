@@ -3,6 +3,8 @@ var backgroundPageConnection = chrome.runtime.connect({
     name: 'panel'
 });
 
+// we need to inject something that returns useful inspects because serialization
+// between inspectedWindow and devtools is limited
 var injectChromeEval = function() {
     // load injected script
 
@@ -21,14 +23,6 @@ backgroundPageConnection.postMessage({
     tabId: chrome.devtools.inspectedWindow.tabId
 });
 
-backgroundPageConnection.postMessage({
-    name: 'fuck me',
-    tabId: chrome.devtools.inspectedWindow.tabId
-});
-
-window.postMessage( {
-    data: { msg: 'Ima let u finish'},
-}, "*");
 
 backgroundPageConnection.onMessage.addListener(function(msg) {
     if(msg.eventType == "inject-opal-console-hooks") {
