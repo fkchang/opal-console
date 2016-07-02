@@ -45,12 +45,12 @@ class ChromeEval
     # ai = AwesomePrintLite::Inspector.new#(raw: true)
     if OpalConsole.config.auto_pretty_print?
       if(Native.native?($_))
-        `console.log("Is Native")`
-        `console.log(#{$_})`
+        # `console.log("Is Native")`
+        # `console.log(#{$_})`
         Native($_).inspect
       else
-        `console.log("NOT Native")`
-        `console.log(#{$_})`
+        # `console.log("NOT Native")`
+        # `console.log(#{$_})`
         # wrapped_obj = $_.is_a? Module ? $_ : Native($_)
         wrapped_obj = Native($_)
         if(wrapped_obj.is_a?(Native::Object))

@@ -13,8 +13,10 @@ var injectOpalConsoleEvalMsg = {
 chrome.runtime.sendMessage( injectOpalConsoleEvalMsg );
 
 window.addEventListener('message', function(event) {
+    /*
     console.log('content listener');
     console.log(event);
+     */
     // Only accept messages from same frame
     if (event.source !== window) {
         return;

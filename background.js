@@ -5,9 +5,12 @@ var connections = {};
 // current tab
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    /*
     console.log('incoming message from injected script');
     console.log(request);
-    console.log(sender);
+     console.log(sender);
+     */
+    
     // Messages from content scripts should have sender.tab set
     if(request.eventType == "inject-opal-console-hooks") {
         // var result = chrome.tabs.executeScript(sender.tab.id, {file: 'chrome-injection.js'})
@@ -31,8 +34,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 chrome.runtime.onConnect.addListener(function(port) {
     // Listen to messages sent from the DevTools page
     port.onMessage.addListener(function(request) {
+        /*
         console.log('incoming message from dev tools page');
         console.log(request);
+         */
         // Register initial connection
         if (request.name == 'init') {
             connections[request.tabId] = port;
