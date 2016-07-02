@@ -20,7 +20,7 @@ def build_static(app_basename, dest=".")
   puts "Wrote #{app_basename}"
 end
 
-desc "debug chrome injection script"
+desc "build chrome injection script"
 task :build_injection_script do
   build_static('chrome-injection', '.')
 end
@@ -36,8 +36,23 @@ task :clean do
 end
 
 
+desc "build all js scripts from opal"
 task :build => [:build_jqconsole_chrome, :build_injection_script] do
   sh 'say done building'
+end
+
+desc 'zip up file to upload to Chrome store'
+task :zip do
+  Dir.mkdir 'zip' unless Dir.exist? 'zip'
+  cp '../opal-console.pem', 'zip/key.pem'
+  cp_r 'assets', 'zip/'
+  cp_r 'vendor', 'zip/'
+  cp Dir['*.js'], 'zip'
+  cp Dir['*.html'], 'zip'
+  cp 'manifest.json', 'zip'
+  Dir.chdir('zip') {
+    sh 'zip -r ../opal-console.zip *'
+  }
 end
 
 task default: :build
