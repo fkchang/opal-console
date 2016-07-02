@@ -2,4 +2,6 @@
 .ruby-gemset
 assets/javascripts/app-jqconsole-chrome.js
 chrome-injection.js
+zip
+opal-console.zip
 *~
