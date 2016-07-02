@@ -1,7 +1,7 @@
 PATH
   remote: /Users/fkchang/src/awesome_print_lite
   specs:
-    awesome_print_lite (0.0.1)
+    awesome_print_lite (0.1.0)
 
 GEM
   remote: https://rubygems.org/
