@@ -1,0 +1,8 @@
+* 0.1.0
+- Initial version
+- Auto load on refresh
+- Don't show devtools "tab" unless Opal is on the page
+
+* 0.1.1
+- fix awesome_print_lite to handler all @\d+ instance vars
+- make sure nil doesn't crash awesome_print_lite
