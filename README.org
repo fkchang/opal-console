@@ -1,8 +1,7 @@
 * Opal Console
 Opal console are develoment tools for Opal based web apps. It starts
 off with an "opal console" which is a subclass of [[https://github.com/fkchang/opal-irb][opal-irb]] modified to
-work as a [[https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=11&cad=rja&uact=8&ved=0ahUKEwithvym7_TNAhWITCYKHe5aAXUQFghKMAo&url=https%253A%252F%252Fchrome.google.com%252Fwebstore%252Fdetail%252Fopal-console%252Fbloiggoenjaanceeabeipidehkahdcam%253Fhl%253Den-US&usg=AFQjCNE94kGLD3ZegUgcd9z6TSD66C26Jg&sig2=BDJm8vtCcXI8byjIBo599w][Chrome devtool]].
-
+work as a [[https://chrome.google.com/webstore/detail/opal-console/bloiggoenjaanceeabeipidehkahdcam?hl=en-US][Chrome devtool]].
 Other features from [[https://www.youtube.com/watch?v=TRkhihHVLzQ][opal-inspector]] will be be added over time.
 
 ** Console Features
